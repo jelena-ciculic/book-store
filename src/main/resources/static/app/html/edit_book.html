@@ -1,0 +1,80 @@
+
+<div ng-controller="editBookCtrl">
+
+    <!--jumbotron-->
+
+    <div class="jumbotron">
+        
+       <h3 class="text-muted">{{book.title}}</h3>
+                        
+    </div>
+
+
+<!--table-->
+    <table class="table table-striped">
+            <thead>
+              <tr>
+                <th colspan="3">
+              
+               
+                  <div class="btn-group btn-group-lg float-right" role="group" aria-label="...">
+                      
+                        <button class="btn btn-warning" type="button" ng-click="changeMode()" >Update data</button>				
+                  </div>
+                </th>
+               
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Title:</td>
+                    <td>{{book.title}}</td>
+                    <td><input type="text"  id="title"  class="form-control" placeholder="enter title..." ng-model="editBook.title" ng-if="editMode"></td>
+                    
+                 </tr>
+              <tr>
+                <td>Edition:</td>
+                <td>{{book.edition}}</td>
+                <td><input type="text"  id="edition"  class="form-control" placeholder="enter edition..." ng-model="editBook.edition"ng-if="editMode" ></td>
+             </tr>
+             
+             <tr>
+                <td>Author:</td>
+                <td>{{book.author.firstName}} {{book.author.lastName}}</td>
+                <td><select id="author"  class="form-control" ng-options="prepAuthor(author) for author in authors track by author.id" ng-model="editBook.author" ng-if="editMode"></select></td>
+            </tr>
+
+            <tr>
+                <td>ISBN:</td>
+                <td>{{book.isbn}}</td>
+                <td><input type="text"  id="isbn"  class="form-control" placeholder="enter ISBN..." ng-model="editBook.isbn" ng-if="editMode" ></td>
+            </tr>
+
+             <tr>
+                <td>Votes:</td>
+                <td>{{book.votes}}</td>
+                <td><input type="text"  id="isbn" class="form-control" value="{{book.votes}}"  ng-disabled="true" ng-if="editMode"></td>
+            </tr>
+
+            <tr>
+                <td>Publisher:</td>
+                <td>{{book.publisher.name}}</td>
+                <td><select id="publisher" class="form-control"  ng-options ="prepPublisher(publisher) for publisher in publishers track by publisher.id" ng-model="editBook.publisher" ng-if="editMode"></select></td>
+            </tr>
+
+            <tr>
+
+            <td colspan="3" ng-if="editMode" >
+
+                <button type="submit" class="btn btn-primary float-right" ng-click="editData(editBook)"  >Save</button>
+
+            </td>
+                
+            </tr>
+
+          
+            </tbody>
+          </table>
+
+
+</div>

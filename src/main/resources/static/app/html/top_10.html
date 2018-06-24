@@ -1,0 +1,38 @@
+<div ng-controller="top10Ctrl">
+
+
+        <div class="jumbotron">
+                                 
+
+                    <h3 class="text-muted">Top 10</h3>
+                
+        </div>
+
+
+
+    <table class="table table-striped">
+            <thead>
+                
+                <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Edition</th>
+                <th scope="col">Author</th>
+                <th scope="col">Votes</th>
+                <th scope="col">Publisher</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="b in topList">
+                <td><a href="#!/books/{{b.id}}">{{b.title}}</a></td>
+                <td>{{b.edition}}</td>
+                <td><a href="#!/authors/{{b.author.id}}">{{b.author.firstName}} {{b.author.lastName}}</a></td>
+                <td>{{b.votes}}</td>
+                <td><a href="#!/publishers/{{b.publisher.id}}">{{b.publisher.name}}</a></td>
+             
+                </tr>
+
+            </tbody>
+        </table>
+
+
+</div>

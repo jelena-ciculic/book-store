@@ -1,0 +1,117 @@
+<div ng-controller="editAuthorCtrl">
+
+    <!--delete modal-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="dleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalLabel"></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body"ng-model = "delBook" >
+                            Are you sure you want to delete book {{delBook.title}}?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                      <button type="button" class="btn btn-primary"  ng-click="removeBook(delBook)" data-toggle="modal" data-target="#deleteModal">Yes</button>
+                    </div>
+                  </div>
+                </div>
+        </div>
+
+        <!--add book modal-->
+        <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addBookModalLabel">Please fill the form:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+        
+                      <form>
+                          <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="enter title..." ng-model="newBook.title">
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="edition">Edition</label>
+                              <input type="text" class="form-control" id="edition" placeholder="enter edition..." ng-model="newBook.edition">
+                          </div>
+                       
+                          <div class="form-group">
+                              <label for="isbn">ISBN</label>
+                              <input type="text" class="form-control" id="isbn" placeholder="enter ISBN..." ng-model="newBook.isbn">
+                          </div>
+                  
+                 
+                          <div class="form-group">
+                              <label for="publisher">Publisher</label>
+                              <select id="publisher" class="form-control" ng-options ="prepPublisher(publisher) for publisher in publishers track by publisher.id" ng-model="newBook.publisher">
+                                
+                              </select>					
+                        </div>
+                        
+                      </form>
+                    
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" ng-click="addBook(newBook)" data-toggle="modal" data-target="#addBookModal">Save</button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addBookModal">Close</button>
+                    
+                  </div>
+                  </div>
+                </div>
+                </div>
+
+            <!--jumbotron-->
+    	      <div class="jumbotron">
+              
+                <h3 class="text-muted">{{author.firstName}} {{author.lastName}}</h3>
+                                     
+            </div>
+
+
+            <!--table-->
+            <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="5">Books
+
+                                <div class="btn-group btn-group-lg float-right" role="group" aria-label="...">
+                                            
+                                 <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addBookModal" ng-click="loadPublishers()">Add new book to list</button>				
+                                </div>
+
+
+                            </th>
+    
+                        </tr>
+                        <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Edition</th>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Votes</th>
+                        <th scope="col">Publisher</th>
+      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="b in books">
+                        <td>{{b.title}}</td>
+                        <td>{{b.edition}}</td>
+                        <td>{{b.isbn}}</td>
+                        <td>{{b.votes}}</td>
+                        <td>{{b.publisher.name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+</div>

@@ -1,0 +1,203 @@
+<div ng-controller="publishersCtrl">
+
+
+  <!--delete modal-->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="dleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this publisher?
+            All books of this publisher will be also deleted!
+        </div>
+        <div class="modal-footer"ng-model="delPub" >
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" ng-click="deletePublisher(delPub.id)" data-toggle="modal" data-target="#deleteModal">Yes</button>
+        </div>
+        </div>
+      </div>
+  </div>
+
+
+  <!--books modal-->
+  <div class="modal fade" id="publisherBooksModal" tabindex="-1" role="dialog" aria-labelledby="publisherBooksModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="authorBooksModalLabel">Books</h5>
+					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+					<div class="modal-body">
+
+							<ul class="list-group">
+									<li class="list-group-item d-flex justify-content-between align-items-center" ng-repeat="b in booksByPublisher">
+									  {{b.title}} - {{b.author.firstName}} {{b.author.lastName}}
+									  <span class="badge badge-primary badge-pill">{{b.votes}}</span>
+									</li>
+									
+							</ul>
+						
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-primary" ng-click="clearData()" data-toggle="modal" data-target="#publisherBooksModal">Close</button>
+					</div>
+				  </div>
+				</div>
+    </div>
+    
+    <!--add new publisher modal-->
+    <div class="modal fade" id="newPublisherModal" tabindex="-1" role="dialog" aria-labelledby="newPublisherModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newPublisherModalLabel">Please fill the form:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+
+            <form>
+                <div class="form-group">
+                  <label for="FirstName">Name: </label>
+                  <input type="text" class="form-control" id="name" placeholder="enter name..." ng-model="newPublisher.name">
+                </div>
+                
+        
+                <div class="form-group">
+                      <label for="email">E-mail:</label>
+                      <input type="text" class="form-control" id="email" placeholder="enter e-mail address..." ng-model="newPublisher.address">
+                                
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Thelephone number:</label>
+                  <input type="text" class="form-control" id="phone" placeholder="enter phone number..." ng-model="newPublisher.telephone">
+                            
+            </div>
+        
+          </form>
+
+    
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="addPublisher(newPublisher)" data-toggle="modal" data-target="#newPublisherModal">Save</button>
+          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#newPublisherModal">Close</button>
+        </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- update publisher modal-->
+      <div class="modal fade" id="updatePublisherModal" tabindex="-1" role="dialog" aria-labelledby="updatePublisherModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updatePublisherModalLabel">Please fill the form:</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+    
+    
+                <form>
+                    <div class="form-group">
+                      <label for="FirstName">Name: </label>
+                      <input type="text" class="form-control" id="name" placeholder="enter name..." ng-model="editPub.name">
+                    </div>
+                    
+            
+                    <div class="form-group">
+                          <label for="email">E-mail:</label>
+                          <input type="text" class="form-control" id="email" placeholder="enter e-mail address..." ng-model="editPub.address">
+                                    
+                    </div>
+    
+                    <div class="form-group">
+                      <label for="phone">Thelephone number:</label>
+                      <input type="text" class="form-control" id="phone" placeholder="enter phone number..." ng-model="editPub.telephone">
+                                
+                </div>
+               
+            
+              </form>
+    
+        
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-click="editPublisher(editPub)" data-toggle="modal" data-target="#updatePublisherModal">Save</button>
+              <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#updatePublisherModal">Close</button>
+            </div>
+            </div>
+          </div>
+          </div>
+        
+        <!--jumbotron-->
+        <div class="jumbotron">
+
+            <h3 class="text-muted">Publishers</h3>
+                                      
+        </div>
+
+
+        <!--search form--> 
+        <form class="form-inline">
+              
+                  <div class="form-group mx-sm-3 mb-2">  
+                    <input type="text" class="form-control" placeholder="Enter name or e-mail...." ng-model="filterPublisher.name">
+                  </div>
+                    <button type="submit" class="btn btn-outline-success mb-2" ng-click="search(filterPublisher)">Find</button>
+        </form>
+
+        <!--table-->
+        <table class="table table-striped">
+                    <thead>
+                                        
+                        <tr>
+                            <th colspan="7">
+
+            
+                            <div class="btn-group btn-group-lg float-right" role="group" aria-label="...">
+                                
+                                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#newPublisherModal">Add new publisher</button>				
+                            </div>
+
+
+                            </th>
+
+                        </tr>
+                            
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">E-mail address</th>
+                        <th scope="col">Thelephone</th>
+                        <th scope="col">Books</th>
+                        <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="p in publishers">
+                        <td>{{p.name}}</td>
+                        <td>{{p.address}}</td>
+                        <td>{{p.telephone}}</td>
+                        <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#publisherBooksModal" ng-click="loadBooks(p.id)">quick view</button></td>
+                        <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updatePublisherModal" ng-click=prepForUpdate(p)>update</button></td>
+                        <td><button type="button" class="btn btn-danger"  ng-click="prepForDel(p)" data-toggle="modal" data-target="#deleteModal" >delete</button></td>                   
+                        <td><button type="button" class="btn btn-secondary" ng-click="details(p.id)">details</button></td>
+                        
+                        </tr>
+                    </tbody>
+        </table>
+
+
+
+</div>

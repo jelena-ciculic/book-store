@@ -1,0 +1,154 @@
+
+<div ng-controller="booksCtrl">
+
+
+	  
+	  <!-- delete modal -->
+	  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="dleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="deleteModalLabel"></h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+					Are you sure you want to delete this book?
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+			  <button type="button" class="btn btn-danger" ng-click="removeBook(delBook)" data-toggle="modal" data-target="#deleteModal">Yes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	  <!--jumbotron-->
+		<div class="jumbotron">
+				
+			<h3 class="text-muted" ng-if="!maxVoteBook.votes==0" >Top 1: {{maxVoteBook.title}}</h3>
+			<p class="lead" ng-if="maxVoteBook.votes==0">Books</p>
+					
+		</div>
+
+		
+		<!--filter form-->
+		<div class="row">
+		<div class="col-6">
+		<form ng-if="filterBookMode">
+					<div class="form-group">
+						<label for="title">Title</label>
+						<input type="text" class="form-control" id="title" placeholder="enter title..." ng-model="filterBook.title">
+					</div>
+					
+
+					<div class="form-group">
+								<label for="author">Author</label>
+								<input type="text" class="form-control" id="author" placeholder="enter first name or last name..." ng-model="filterBook.author">
+													
+					</div>
+
+
+				<div class="form-group">
+										<label for="minVotes">minVotes</label>
+										<input type="text" class="form-control" id="minVotes" placeholder="enter minimal number of votes..." ng-model="filterBook.minVotes">
+															
+				</div>
+			
+
+				<button type="submit" class="btn btn-primary" ng-click="searchBook(filterBook)">Find</button>
+				<button type="submit" class="btn btn-outline-primary" ng-click="cancelFilter()">Cancel</button>
+
+		</form>
+		</div>
+		</div>
+
+		<!--new book form-->
+		<div class="row">
+		<div class="col-6">
+		<form ng-if="addBookMode">
+				<div class="form-group">
+					<label for="title">Title</label>
+					<input type="text" class="form-control" id="title" placeholder="enter title..." ng-model="newBook.title">
+				</div>
+				
+				<div class="form-group">
+						<label for="edition">Edition</label>
+						<input type="text" class="form-control" id="edition" placeholder="enter edition..." ng-model="newBook.edition">
+				</div>
+
+				<div class="form-group">
+							<label for="author">Author</label>
+							<select id="author" class="form-control" ng-options="prepAuthor(author) for author in authors track by author.id" ng-model="newBook.author">
+							</select>					
+				</div>
+
+				<div class="form-group">
+						<label for="isbn">ISBN</label>
+						<input type="text" class="form-control" id="isbn" placeholder="enter ISBN..." ng-model="newBook.isbn">
+				</div>
+
+
+
+				<div class="form-group">
+						<label for="publisher">Publisher</label>
+						<select id="publisher" class="form-control" ng-options ="prepPublisher(publisher) for publisher in publishers track by publisher.id" ng-model="newBook.publisher">
+							
+						</select>					
+			</div>
+
+			<button type="submit" class="btn btn-primary" ng-click="addBook(newBook)">Save</button>
+			<button type="submit" class="btn btn-outline-primary" ng-click="cancelAdd()">Cancel</button>
+
+		</form>
+		</div>
+		</div>
+
+		<!-- books table-->
+		<table class="table table-striped">
+				<thead>
+					<tr>
+						<th colspan="6">
+
+								<div class="btn-group btn-group-lg float-right" role="group" aria-label="...">
+									
+										<button class="btn btn-success" type="button" ng-click= "addMode()">Add new book</button>
+										<button class="btn btn-outline-success" type="button" ng-click="filterMode()">Filter</button>
+										
+										
+
+								</div>
+
+						</th>
+
+					</tr>
+					<tr>
+					<th scope="col">Title</th>
+					<th scope="col">Edition</th>
+					<th scope="col">Author</th>
+					<th scope="col">Votes</th>
+					<th scope="col">Publisher</th>
+					<th scope="col">Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="b in books">
+					<td>{{b.title}}</td>
+					<td>{{b.edition}}</td>
+					<td>{{b.author.firstName}} {{b.author.lastName}}</td>
+					<td>{{b.votes}}</td>
+					<td>{{b.publisher.name}}</td>
+					<td><button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deleteModal" ng-click="prepForDel(b)">delete</button>
+							<button type="button" class="btn btn-warning" ng-click="prepForEdit(b.id)">update</button>
+								<button type="button" class="btn btn-primary" ng-click="vote(b)">+1</button></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="btn-group float-right">
+					<button class="btn btn-light" ng-click="forward()" ng-disabled="currentPage == 0">Prev</button>
+					<button class="btn btn-light" ng-click="backward()" ng-disabled="currentPage == totalPages - 1">Next</button>
+			</div>
+		
+
+</div>

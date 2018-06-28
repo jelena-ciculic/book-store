@@ -1,5 +1,5 @@
 # book-store
-simple Spring Boot application example.
+Spring Boot application example.
 
 Server side:Spring Boot, Hibernate, Spring Data JPA.
 

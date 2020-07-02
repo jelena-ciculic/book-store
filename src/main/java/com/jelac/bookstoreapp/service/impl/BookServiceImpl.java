@@ -19,7 +19,7 @@ public class BookServiceImpl  implements BookService {
 	@Override
 	public Page<Book> findAll(int page) {
 		
-		return bookRepository.findAll(PageRequest.of(page, 5));
+		return bookRepository.findAll(new PageRequest(page, 5));
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class BookServiceImpl  implements BookService {
 	@Override
 	public Page<Book> filter(String title, String author, Integer minVotes, int page) {
 		
-		return bookRepository.search(title, author, minVotes, PageRequest.of(page, 5));
+		return bookRepository.search(title, author, minVotes, new PageRequest(page, 5));
 	}
 
 	@Override
